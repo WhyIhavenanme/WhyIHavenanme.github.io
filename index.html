@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>文件浏览器</title>
+    <style>
+        ul {
+            list-style-type: none;
+        }
+        li {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>文件浏览器</h1>
+    <div id="file-browser"></div>
+
+    <script>
+        async function fetchDirectory(path) {
+            const response = await fetch(`/list?path=${encodeURIComponent(path)}`);
+            return await response.json();
+        }
+
+        function createFileElement(file) {
+            const li = document.createElement('li');
+            li.textContent = file.name;
+            if (file.isDirectory) {
+                li.addEventListener('click', async () => {
+                    if (li.querySelector('ul')) {
+                        li.querySelector('ul').remove();
+                    } else {
+                        const ul = document.createElement('ul');
+                        const files = await fetchDirectory(file.path);
+                        files.forEach(f => ul.appendChild(createFileElement(f)));
+                        li.appendChild(ul);
+                    }
+                });
+            }
+            return li;
+        }
+
+        async function loadFiles() {
+            const files = await fetchDirectory('./pic');
+            const ul = document.createElement('ul');
+            files.forEach(file => ul.appendChild(createFileElement(file)));
+            document.getElementById('file-browser').appendChild(ul);
+        }
+
+        loadFiles();
+    </script>
+</body>
+</html>
