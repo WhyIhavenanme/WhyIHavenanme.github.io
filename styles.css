@@ -1,6 +1,25 @@
 ul {
     list-style-type: none;
+    padding-left: 20px; /* 调整子文件夹的缩进 */
 }
 .folder {
     cursor: pointer;
+    padding-left: 20px; /* 调整图标和文字之间的间距 */
+    position: relative;
+}
+.folder > span {
+    padding-left: 25px; /* 调整图标和文字之间的间距 */
+    position: relative;
+}
+.folder > span::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url('icon/folder.png');
+    background-size: 20px 20px;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
 }

@@ -12,9 +12,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const li = document.createElement('li');
             if (item.type === 'folder') {
                 li.classList.add('folder');
-                li.textContent = item.name;
+                const span = document.createElement('span');
+                span.textContent = item.name;
+                li.appendChild(span);
                 li.addEventListener('click', function(event) {
-                    if (event.target === li) {
+                    if (event.target === span) {
                         if (li.classList.contains('expanded')) {
                             li.classList.remove('expanded');
                             li.removeChild(li.lastChild);
