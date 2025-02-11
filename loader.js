@@ -19,9 +19,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (event.target === span) {
                         if (li.classList.contains('expanded')) {
                             li.classList.remove('expanded');
+                            span.style.fontSize = ''; // Reset font size when collapsed
                             li.removeChild(li.lastChild);
                         } else {
                             li.classList.add('expanded');
+                            span.style.fontSize = '1.5em'; // Change font size when expanded
                             fetch(`/pic${parentPath}/${item.name}`)
                                 .then(response => response.json())
                                 .then(subData => {
